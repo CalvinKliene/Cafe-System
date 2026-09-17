@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Six-Four-Five Cafe — Staff System</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============ SIDEBAR NAVIGATION ============ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">Six-Four-Five<br>Cafe</div>
+      <div class="brand-tagline">STAFF SYSTEM</div>
+    </div>
+
+    <nav class="nav" id="nav">
+      <button class="nav-item is-active" data-page="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-item" data-page="orders">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2h12l-1 6H7L6 2z"/><path d="M7 8v12a2 2 0 002 2h6a2 2 0 002-2V8"/></svg>
+        New Order
+      </button>
+      <button class="nav-item" data-page="menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h5"/></svg>
+        Menu
+      </button>
+      <button class="nav-item" data-page="inventory">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg>
+        Inventory
+      </button>
+      <button class="nav-item" data-page="reports">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+        Sales Reports
+      </button>
+      <button class="nav-item" data-page="transactions">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2V3z"/><path d="M9 8h6M9 12h6"/></svg>
+        Transactions
+      </button>
+      <button class="nav-item" data-page="settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+        Settings
+      </button>
+    </nav>
+
+    <div class="sidebar-foot">Prototype — In Progress</div>
+  </aside>
+
+  <!-- ============ WORKSPACE ============ -->
+  <main class="workspace">
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+        <div>
+          <h1 class="page-title" id="pageTitle">Dashboard</h1>
+          <div class="page-subtitle" id="pageSubtitle">Espresso Dreams in Every Cups</div>
+        </div>
+      </div>
+      <div class="topbar-clock">
+        <strong id="clockTime">—</strong>
+        <span id="clockDate">—</span>
+      </div>
+    </header>
+
+    <!-- ---------- DASHBOARD ---------- -->
+    <section class="page" id="page-dashboard">
+      <div class="stat-grid" id="statGrid"></div>
+      <div class="dash-grid">
+        <div class="card panel">
+          <div class="panel-head">
+            <h2 class="panel-title">Sales this year</h2>
+            <span class="panel-note" id="dashYearNote"></span>
+          </div>
+          <div id="dashChart"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head">
+            <h2 class="panel-title">Most ordered</h2>
+            <span class="panel-note">All time</span>
+          </div>
+          <div id="dashTopProducts"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- NEW ORDER ---------- -->
+    <section class="page" id="page-orders" hidden>
+      <div class="order-layout">
+
+        <div>
+          <div class="filter-bar">
+            <div class="search-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+              <input type="text" class="input" id="productSearch" placeholder="Search the menu">
+            </div>
+          </div>
+          <div class="chip-row" id="categoryFilters" style="margin-bottom:18px"></div>
+          <div class="product-grid" id="productGrid"></div>
+        </div>
+
+        <aside class="ticket">
+          <div class="ticket-head">
+            <h2 class="ticket-title">Current order</h2>
+            <div class="ticket-sub" id="ticketSub">No items yet</div>
+          </div>
+
+          <div class="ticket-lines" id="ticketLines"></div>
+
+          <div class="ticket-totals" id="ticketTotals"></div>
+
+          <div class="ticket-pay">
+            <div class="field">
+              <label for="cashInput">Cash received</label>
+              <input type="number" class="input cash-input" id="cashInput" min="0" step="1" placeholder="0">
+            </div>
+            <div class="quick-cash" id="quickCash"></div>
+            <div class="validation" id="orderValidation"></div>
+            <button class="btn btn-brass btn-lg btn-block" id="checkoutBtn">Complete order</button>
+            <button class="btn btn-sm btn-block btn-danger" id="clearOrderBtn" style="margin-top:8px">Clear order</button>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- ---------- MENU ---------- -->
+    <section class="page" id="page-menu" hidden>
+      <div class="filter-bar">
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input type="text" class="input" id="menuSearch" placeholder="Search products">
+        </div>
+        <select class="input" id="menuCategoryFilter" style="max-width:190px"></select>
+        <button class="btn btn-primary" id="addProductBtn">Add product</button>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table class="data" id="menuTable"></table>
+        </div>
+        <div id="menuEmpty"></div>
+      </div>
+    </section>
+
+    <!-- ---------- INVENTORY ---------- -->
+    <section class="page" id="page-inventory" hidden>
+      <div class="stat-grid" id="invStats" style="grid-template-columns:repeat(3,1fr)"></div>
+      <div class="filter-bar">
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input type="text" class="input" id="invSearch" placeholder="Search products">
+        </div>
+        <select class="input" id="invStatusFilter" style="max-width:170px">
+          <option value="all">All stock levels</option>
+          <option value="in">In stock</option>
+          <option value="low">Low stock</option>
+          <option value="out">Out of stock</option>
+        </select>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table class="data" id="invTable"></table>
+        </div>
+        <div id="invEmpty"></div>
+      </div>
+    </section>
+
+    <!-- ---------- SALES REPORTS ---------- -->
+    <section class="page" id="page-reports" hidden>
+      <div class="report-tabs">
+        <button class="chip is-on" data-report="monthly">Monthly</button>
+        <button class="chip" data-report="annual">Annual</button>
+      </div>
+      <div id="reportBody"></div>
+    </section>
+
+    <!-- ---------- TRANSACTIONS ---------- -->
+    <section class="page" id="page-transactions" hidden>
+      <div class="filter-bar">
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input type="text" class="input" id="txnSearch" placeholder="Search order number or item">
+        </div>
+        <div class="field" style="margin:0">
+          <input type="date" class="input" id="txnDateFrom" style="max-width:165px">
+        </div>
+        <div class="field" style="margin:0">
+          <input type="date" class="input" id="txnDateTo" style="max-width:165px">
+        </div>
+        <button class="btn btn-sm" id="txnClearFilters">Clear filters</button>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table class="data" id="txnTable"></table>
+        </div>
+        <div id="txnEmpty"></div>
+      </div>
+    </section>
+
+    <!-- ---------- SETTINGS ---------- -->
+    <section class="page" id="page-settings" hidden>
+      <div class="settings-grid">
+        <div class="card panel">
+          <div class="panel-head"><h2 class="panel-title">Cafe details</h2></div>
+          <div class="field">
+            <label for="setCafeName">Cafe name on receipts</label>
+            <input type="text" class="input" id="setCafeName">
+          </div>
+          <div class="field">
+            <label for="setThreshold">Low stock warning at or below</label>
+            <input type="number" class="input" id="setThreshold" min="0" step="1">
+          </div>
+          <button class="btn btn-primary" id="saveSettingsBtn">Save settings</button>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head"><h2 class="panel-title">Data</h2></div>
+          <p style="font-size:13.5px;color:var(--ink-soft);margin-top:0">
+            This prototype keeps products and transactions in this browser.
+            Resetting restores the original menu and deletes every saved transaction.
+          </p>
+          <button class="btn btn-danger" id="resetDataBtn">Reset all data</button>
+        </div>
+
+        <div class="card panel" style="grid-column:1/-1">
+          <div class="panel-head">
+            <h2 class="panel-title">How the system works</h2>
+            <span class="panel-note">For the project defense</span>
+          </div>
+          <div class="io-flow">
+            <div class="io-box">
+              <h4>Input</h4>
+              <ul><li>Product selected</li><li>Size selected</li><li>Quantity entered</li><li>Add-ons chosen</li><li>Cash received</li></ul>
+            </div>
+            <div class="io-box">
+              <h4>Process</h4>
+              <ul><li>Price looked up</li><li>Item subtotal computed</li><li>Add-on subtotal computed</li><li>Total computed</li><li>Change computed</li><li>Stock reduced</li><li>Transaction saved</li></ul>
+            </div>
+            <div class="io-box">
+              <h4>Output</h4>
+              <ul><li>Digital receipt</li><li>Change due</li><li>Updated inventory</li><li>Transaction record</li><li>Monthly report</li><li>Annual report</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============ MODALS ============ -->
+<div class="modal-backdrop" id="modalBackdrop" hidden>
+  <div class="modal" id="modalBox"></div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<!-- Data layer (temporary, replaced by the Python backend later) -->
+<script src="js/menu-data.js"></script>
+<script src="js/storage.js"></script>
+
+<!-- Shared helpers and navigation -->
+<script src="js/app.js"></script>
+
+<!-- One file per screen -->
+<script src="js/orders.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/menu-page.js"></script>
+<script src="js/inventory.js"></script>
+<script src="js/reports.js"></script>
+<script src="js/transactions.js"></script>
+<script src="js/settings.js"></script>
+
+<script>
+  /* Start the app once every file above has loaded. */
+  App.start();
+</script>
+
+</body>
+</html>
