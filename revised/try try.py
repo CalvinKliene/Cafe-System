@@ -1,12 +1,3 @@
-# =============================================================
-# SIX-FOUR-FIVE CAFE - CONSOLE ORDERING SYSTEM
-# =============================================================
-#
-# INPUT   -> item, size, amount, add-ons, cash received
-# PROCESS -> price lookup, subtotal, total, change
-# OUTPUT  -> receipt, change
-# =============================================================
-
 cafeName = "SIX-FOUR-FIVE CAFE"
 
 # DECLARATION OF SIZES AND PRICES OF PRODUCTS
